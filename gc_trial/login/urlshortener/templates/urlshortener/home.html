@@ -1,0 +1,55 @@
+
+
+{% extends 'urlshortener/base.html' %}
+
+{% block body %}
+
+<div class="container">
+  <div class="card mt-5">
+    <div class="card-header text-center py-3">
+      <h1>URL Shortener Application <i class="fas fa-link px-2"></i></h1>
+    </div>
+    <div class="px-3 py-4">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          {{ form.long_url }}
+          <button class="btn btn-success" type="submit">
+            Shorten
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% if errors %}
+    <div class="alert alert-danger mt-4" role="alert">
+      <p>{{ errors }}</p>
+    </div>
+  {% endif %}
+
+  {% if new_url %}
+    <div class="mx-auto text-center mt-5">
+      <h2 class="text-danger">Your shortened URL</h2>
+      <p>You can copy the link below and share it with your friends</p>
+      <p>{{ new_url }}</p>
+      <p><span class="text-danger">Previous URL:</span> {{ long_url }}</p>
+      <p>Number of times: {{ no_of_times }}</p>
+
+      <hr>
+
+      <h1>All URLs</h1>
+      <div class="list-group">
+        {% for url in all_urls %}
+          <div class="list-group-item">
+            <p class="mb-0">Short URL: {{ url.short_url }}</p>
+            <p class="mb-0">Long URL: {{ url.long_url }}</p>
+            <p class="mb-0">Number of times: {{ url.times_followed }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock body %}
